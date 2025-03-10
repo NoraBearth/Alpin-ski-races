@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import joblib
-from sqlalchemy import create_engine
 from fis.evaluation import evaluation
 
 # Import data
