@@ -65,13 +65,17 @@ elif selected_tab == "Descriptive Statistics":
     top_males = male_df.nlargest(10, "wcp")
     top_females = female_df.nlargest(10, "wcp")
     
+    # Sort the top_males and top_females dataframes by "wcp" in descending order
+    top_males_sorted = top_males.sort_values(by='wcp', ascending=False)
+    top_females_sorted = top_females.sort_values(by='wcp', ascending=False)
+    
     col1, col2 = st.columns(2)
     with col1:
         st.subheader("Top 10 Male Athletes")
-        st.plotly_chart(px.bar(top_males, x="wcp", y="name", orientation="h", title=f"Top 10 Males {season}"))
+        st.plotly_chart(px.bar(top_males_sorted, x="wcp", y="name", orientation="h", title=f"Top 10 Males {season}"))
     with col2:
         st.subheader("Top 10 Female Athletes")
-        st.plotly_chart(px.bar(top_females, x="wcp", y="name", orientation="h", title=f"Top 10 Females {season}"))
+        st.plotly_chart(px.bar(top_females_sorted, x="wcp", y="name", orientation="h", title=f"Top 10 Females {season}"))
 
     # Athlete performance graph
     athlete = st.selectbox("Select an athlete", df["name"].unique())
