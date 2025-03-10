@@ -64,8 +64,16 @@ elif selected_tab == "Predictions & Actual Results":
     
     # Get race data
     race_data = df_2025_and_beyond[df_2025_and_beyond['race_id'] == race_id].copy()
-    features = ['age', 'wcp_last_10', 'wcp_last_5', 'wcp_last_1', 'team_wcp_last_10', 'team_wcp_last_5', 'team_wcp_last_1']
-    race_data['Predicted'] = model.predict_proba(race_data[features])[:, 1]
+    # Feature selection
+    X_NAME_cat = ['gender', 'discipline']
+    X_NAME_numeric = ['age', 'wcp_last_10', 'wcp_last_5', 'wcp_last_1',
+                      'team_wcp_last_10', 'team_wcp_last_5', 'team_wcp_last_1']
+    X_NAME_binary = ['own_trainer', 'home_race', 'startmorning', 'startafternoon',
+                     'earlyseason', 'midseason', 'top20', 'top21_30',
+                     'aut', 'sui', 'ita', 'usa', 'fra', 'ger', 'nor', 'swe',
+                     'can', 'slo']
+    X_NAME = X_NAME_numeric + X_NAME_cat + X_NAME_binary
+    race_data['Predicted'] = model.predict_proba(race_data[X_NAME])[:, 1]
     predictions = race_data.sort_values(by='Predicted', ascending=False).head(3)
     
     # Display Predictions
@@ -79,7 +87,7 @@ elif selected_tab == "Predictions & Actual Results":
     
     # Model Evaluation Metrics
     df_test = df[df['date'] >= pd.Timestamp('2024-03-09')]
-    df_test['Predicted'] = model.predict_proba(df_test[features])[:, 1]
+    df_test['Predicted'] = model.predict_proba(df_test[X_NAME])[:, 1]
     df_test = df_test.sort_values(by='Predicted', ascending=False)
     df_test['predicted_podium'] = df_test['Predicted'].rank(method="first", ascending=False) <= 3
     
