@@ -1,1 +1,1 @@
-# Alpin-ski-races
+# Ski-race-predictions
