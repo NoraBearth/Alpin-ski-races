@@ -85,8 +85,9 @@ elif selected_tab == "Descriptive Statistics":
 elif selected_tab == "Predictions & Actual Results":
     st.header("Predictions & Actual Results")
     
-    # Race and model selection
-    selected_race = st.selectbox("Select Race", df['race_id'].unique())
+    # Filter data for 2024 and beyond
+    df_2024 = df[df.season >= 2024].copy()
+    selected_race = st.selectbox("Select Race", df_2024['race_id'].unique())
     selected_model = st.selectbox("Select Model", ["Random Forest", "Gradient Boosting", "Lasso"])
 
     # Default figure and message when no race is selected
@@ -94,8 +95,6 @@ elif selected_tab == "Predictions & Actual Results":
     default_message = "Select a race and model to see predictions and actual results."
 
     if selected_race:
-        # Filter data for 2024 and beyond
-        df_2024 = df[df.season >= 2024].copy()
 
         # Get the race data for the selected race
         race_data = df_2024[df_2024['race_id'] == selected_race].copy()
