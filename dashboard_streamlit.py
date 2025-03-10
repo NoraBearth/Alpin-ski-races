@@ -19,9 +19,37 @@ st.title("Ski World Cup Dashboard")
 
 # Sidebar for navigation
 st.sidebar.header("Navigation")
-selected_tab = st.sidebar.radio("Go to:", ["Descriptive Statistics", "Predictions & Actual Results"])
+selected_tab = st.sidebar.radio("Go to:", ["General Information", "Descriptive Statistics", "Predictions & Actual Results"])
 
-if selected_tab == "Descriptive Statistics":
+if selected_tab == "General Information":
+    st.header("Welcome to the Alpine ski race Dashboard!")
+    st.write(
+        """
+        This dashboard allows you to explore descriptive statistics, predictions and
+        actual results for different races of the Alpine Ski World cup.
+
+        ### How the machine learning models were trained:
+
+        The models have been trained on race data, with various features such
+        as the athletes' statistics, race history, and personal details.
+        The models predict the probability of a racer finishing in the top 3
+        positions (on the podium) for each race.
+
+        The data was split into **training** and **testing** sets based on the
+        race season. The training data consists of early seasons, and the
+        testing data includes races of the last two seasons.
+
+        Each model estimates the probability that a racer will be on the podium
+        for a given race. The output of the models is a **probability score**
+        for each athlete, where a higher probability means a higher likelihood
+        of finishing in the top 3 positions.
+
+        The dashboard was only done for fun.
+
+        """
+    )
+
+elif selected_tab == "Descriptive Statistics":
     st.header("Descriptive Statistics")
     
     # Season selector
